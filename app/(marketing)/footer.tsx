@@ -7,7 +7,7 @@ export const Footer = () => {
       <div className="max-w-screen-lg mx-auto flex items-center justify-evenly h-full">
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/laptop.svg"
+            src="/lp2.svg"
             alt="LPII"
             height={32}
             width={40}
@@ -17,7 +17,7 @@ export const Footer = () => {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/keyboard.svg"
+            src="/arqsist.svg"
             alt="Arquitetura de Sist. Comp."
             height={32}
             width={40}
@@ -27,7 +27,7 @@ export const Footer = () => {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/database.svg"
+            src="/db.svg"
             alt="Banco de Dados"
             height={32}
             width={40}
@@ -37,7 +37,7 @@ export const Footer = () => {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/settings.svg"
+            src="/engsoft.svg"
             alt="Engenharia de Software"
             height={32}
             width={40}
