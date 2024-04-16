@@ -17,7 +17,7 @@ export const Footer = () => {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/terminal.svg"
+            src="/keyboard.svg"
             alt="Arquitetura de Sist. Comp."
             height={32}
             width={40}
@@ -37,7 +37,7 @@ export const Footer = () => {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/cog.svg"
+            src="/settings.svg"
             alt="Engenharia de Software"
             height={32}
             width={40}
