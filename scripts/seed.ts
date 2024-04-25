@@ -52,6 +52,49 @@ const main = async () => {
       }
     ])
 
+    await db.insert(schema.lessons).values([
+      {
+        id: 1,
+        unitId: 1,
+        title: 'O que é Engenharia de Software?',
+        order: 1
+      }
+    ])
+
+    await db.insert(schema.challenges).values([
+      {
+        id: 1,
+        lessonId: 1,
+        type: 'SELECT',
+        order: 1,
+        question: 'O que é Engenharia de Software?'
+      }
+    ])
+
+    await db.insert(schema.challengeOptions).values([
+      {
+        id: 1,
+        challengeId: 1,
+        imageSrc: '/man.svg',
+        correct: true,
+        text: 'Engenharia de Software é a aplicação de uma abordagem sistemática, disciplinada e quantificável ao desenvolvimento, operação e manutenção de software.'
+      },
+      {
+        id: 2,
+        challengeId: 1,
+        imageSrc: '/woman.svg',
+        correct: false,
+        text: 'Calvin'
+      },
+      {
+        id: 3,
+        challengeId: 1,
+        imageSrc: '/robot.svg',
+        correct: false,
+        text: 'Kept'
+      }
+    ])
+
     console.log('Seeding finished')
   } catch (error) {
     console.error(error)

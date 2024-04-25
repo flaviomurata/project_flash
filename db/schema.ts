@@ -39,7 +39,7 @@ export const unitsRelations = relations(units, ({ one, many }) => ({
     fields: [units.courseId],
     references: [courses.id]
   }),
-  lesson: many(lessons)
+  lessons: many(lessons)
 }))
 
 export const lessons = pgTable('lessons', {
@@ -65,7 +65,6 @@ export const challengesEnum = pgEnum('type', ['SELECT', 'ASSIST'])
 
 export const challenges = pgTable('challenges', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
   lessonId: integer('lesson_id')
     .references(() => units.id, {
       onDelete: 'cascade' // This will delete all lessons associated with a unit when the unit is deleted
@@ -87,7 +86,6 @@ export const challengesRelations = relations(challenges, ({ one, many }) => ({
 
 export const challengeOptions = pgTable('challenge_options', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
   challengeId: integer('challengeId')
     .references(() => challenges.id, {
       onDelete: 'cascade' // This will delete all lessons associated with a unit when the unit is deleted
