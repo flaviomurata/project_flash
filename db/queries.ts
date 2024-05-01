@@ -1,5 +1,5 @@
 import db from '@/db/drizzle'
-import { courses, userProgress } from '@/db/schema'
+import { challengeProgress, courses, userProgress } from '@/db/schema'
 import { auth } from '@clerk/nextjs'
 import { eq } from 'drizzle-orm'
 import { cache } from 'react'
@@ -11,6 +11,7 @@ export const getUserProgress = cache(async () => {
     return null
   }
 
+  // TODO: Confirm whether order is needed
   const data = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
     with: {
@@ -21,9 +22,10 @@ export const getUserProgress = cache(async () => {
 })
 
 export const getUnits = cache(async () => {
+  const { userId } = auth()
   const userProgress = await getUserProgress()
 
-  if (!userProgress?.activeCourseId) {
+  if (!userId || !userProgress?.activeCourseId) {
     return []
   }
 
@@ -34,7 +36,9 @@ export const getUnits = cache(async () => {
         with: {
           challenges: {
             with: {
-              challengeProgress: true
+              challengeProgress: {
+                where: eq(challengeProgress.userId, userId)
+              }
             }
           }
         }

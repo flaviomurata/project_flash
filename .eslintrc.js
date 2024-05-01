@@ -20,7 +20,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error',
-    '@typescript-eslint/no-empty-function': 'off'
+    'prettier/prettier': 1,
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-unused-vars': 1
   }
 }
