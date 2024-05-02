@@ -1,5 +1,5 @@
 import db from '@/db/drizzle'
-import { challengeProgress, courses, userProgress } from '@/db/schema'
+import { challengeProgress, courses, lessons, userProgress } from '@/db/schema'
 import { auth } from '@clerk/nextjs'
 import { eq } from 'drizzle-orm'
 import { cache } from 'react'
@@ -76,4 +76,135 @@ export const getCourseById = cache(async (courseId: number) => {
     // TODO: Populate units and lessons
   })
   return data
+})
+
+export const getCourseProgress = cache(async () => {
+  const { userId } = auth()
+  const userProgress = await getUserProgress()
+
+  if (!userId || !userProgress?.activeCourseId) {
+    return null
+  }
+
+  const unitsInActiveCourse = await db.query.units.findMany({
+    orderBy: (units, { asc }) => [asc(units.order)],
+    where: eq(courses.id, userProgress.activeCourseId),
+    with: {
+      lessons: {
+        orderBy: (lessons, { asc }) => [asc(lessons.order)],
+        with: {
+          unit: true,
+          challenges: {
+            with: {
+              challengeProgress: {
+                where: eq(challengeProgress.userId, userId)
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  // Find the first lesson that has an uncompleted challenge
+
+  const firstUncompletedLesson = unitsInActiveCourse
+    .flatMap((unit) => unit.lessons)
+    .find((lesson) => {
+      // TODO: If something does not work, check the last if clause
+      return lesson.challenges.some((challenge) => {
+        return (
+          !challenge.challengeProgress ||
+          challenge.challengeProgress.length === 0 ||
+          challenge.challengeProgress.some((progress) => !progress.completed)
+        )
+      })
+    })
+
+  return {
+    activeLesson: firstUncompletedLesson,
+    activeLessonId: firstUncompletedLesson?.id
+  }
+})
+
+export const getLesson = cache(async (id?: number) => {
+  const { userId } = auth()
+
+  if (!userId) {
+    return null
+  }
+
+  const courseProgress = await getCourseProgress()
+
+  const lessonId = id || courseProgress?.activeLessonId
+
+  if (!lessonId) {
+    return null
+  }
+
+  // find the lesson with the given id
+
+  const data = await db.query.lessons.findFirst({
+    where: eq(lessons.id, lessonId),
+    with: {
+      unit: true,
+      challenges: {
+        orderBy: (challenges, { asc }) => [asc(challenges.order)],
+        with: {
+          challengeOptions: true,
+          challengeProgress: {
+            where: eq(challengeProgress.userId, userId)
+          }
+        }
+      }
+    }
+  })
+
+  // if there's no data or no challenges, return null
+
+  if (!data || !data.challenges) {
+    return null
+  }
+
+  const normalizedChallenges = data.challenges.map((challenge) => {
+    // TODO: If something does not work, check the last if clause
+    const completed =
+      challenge.challengeProgress &&
+      challenge.challengeProgress.length > 0 &&
+      challenge.challengeProgress.every((progress) => progress.completed)
+
+    return {
+      ...challenge,
+      completed
+    }
+  })
+
+  return {
+    ...data,
+    challenges: normalizedChallenges
+  }
+})
+
+export const getLessonPercentage = cache(async () => {
+  const courseProgress = await getCourseProgress()
+
+  if (!courseProgress?.activeLessonId) {
+    return 0
+  }
+
+  const lesson = await getLesson(courseProgress.activeLessonId)
+
+  if (!lesson) {
+    return 0
+  }
+
+  const completedChallenges = lesson.challenges.filter(
+    (challenge) => challenge.completed
+  )
+
+  const percentage = Math.round(
+    (completedChallenges.length / lesson.challenges.length) * 100
+  )
+
+  return percentage
 })
