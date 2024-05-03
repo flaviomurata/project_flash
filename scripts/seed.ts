@@ -46,8 +46,8 @@ const main = async () => {
       {
         id: 1,
         courseId: 1,
-        title: 'Engenharia de Software',
-        description: 'Aprenda os fundamentos de Engenharia de Software',
+        title: 'Desenvolvimento de Software',
+        description: 'Conceitos básicos de Engenharia de Software',
         order: 1
       }
     ])
@@ -56,31 +56,31 @@ const main = async () => {
       {
         id: 1,
         unitId: 1,
-        title: 'Desenvolvimento de Software',
+        title: 'Lição 1',
         order: 1
       },
       {
         id: 2,
         unitId: 1,
-        title: 'Processos de Software',
+        title: 'Lição 2',
         order: 2
       },
       {
         id: 3,
         unitId: 1,
-        title: 'Engenharia de Requisitos',
+        title: 'Lição 3',
         order: 3
       },
       {
         id: 4,
         unitId: 1,
-        title: 'Fundamentos de Requisitos',
+        title: 'Lição 4',
         order: 4
       },
       {
         id: 5,
         unitId: 1,
-        title: 'Análise Orientada a Objetos',
+        title: 'Lição 5',
         order: 5
       }
     ])
