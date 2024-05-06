@@ -92,8 +92,7 @@ export const challengeOptions = pgTable('challenge_options', {
     })
     .notNull(),
   text: text('text').notNull(),
-  correct: boolean('correct').notNull(),
-  imageSrc: text('image_src')
+  correct: boolean('correct').notNull()
 })
 
 export const challengeOptionsRelations = relations(

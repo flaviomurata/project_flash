@@ -91,7 +91,7 @@ const main = async () => {
         lessonId: 1,
         type: 'SELECT',
         order: 1,
-        question: 'O que é Engenharia de Software?'
+        question: 'O que é um Software?'
       }
     ])
 
@@ -99,23 +99,20 @@ const main = async () => {
       {
         id: 1,
         challengeId: 1,
-        imageSrc: '/man.svg',
         correct: true,
-        text: 'Engenharia de Software é a aplicação de uma abordagem sistemática, disciplinada e quantificável ao desenvolvimento, operação e manutenção de software.'
+        text: 'Um conjunto de instruções que quando executadas realizam uma ou várias tarefas específicas, podendo ser na forma de programas, procedimentos, algoritmos, entre outros.'
       },
       {
         id: 2,
         challengeId: 1,
-        imageSrc: '/woman.svg',
         correct: false,
-        text: 'Calvin'
+        text: 'Dispositivo físico que executa tarefas específicas.'
       },
       {
         id: 3,
         challengeId: 1,
-        imageSrc: '/robot.svg',
         correct: false,
-        text: 'Kept'
+        text: 'Sistema de Hardware utilizado para armazenar informações.'
       }
     ])
 
