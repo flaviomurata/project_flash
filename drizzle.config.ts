@@ -2,11 +2,11 @@ import 'dotenv/config'
 import { Config, defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
+  dialect: 'postgresql',
   schema: './db/schema.ts',
   out: './drizzle',
-  driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL as string
+    url: process.env.DATABASE_URL as string
   },
   verbose: true,
   strict: true
