@@ -1,10 +1,11 @@
 import { challenges } from '@/db/schema'
 import { cn } from '@/lib/utils'
 import { useCallback } from 'react'
-import { useKey } from 'react-use'
+import { useAudio, useKey } from 'react-use'
 
 type Props = {
   id: number
+  audioSrc: string | null
   text: string
   shortcut: string
   selected?: boolean
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export const Card = ({
+  audioSrc,
   text,
   shortcut,
   selected,
@@ -23,6 +25,8 @@ export const Card = ({
   type,
   onClick
 }: Props) => {
+  const [audio, _, controls] = useAudio({ src: audioSrc || '' })
+
   const handleClick = useCallback(() => {
     if (disabled) return
     onClick()
