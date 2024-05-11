@@ -66,7 +66,7 @@ export const challengesEnum = pgEnum('type', ['SELECT', 'ASSIST'])
 export const challenges = pgTable('challenges', {
   id: serial('id').primaryKey(),
   lessonId: integer('lesson_id')
-    .references(() => units.id, {
+    .references(() => lessons.id, {
       onDelete: 'cascade' // This will delete all lessons associated with a unit when the unit is deleted
     })
     .notNull(),

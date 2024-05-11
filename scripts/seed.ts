@@ -163,6 +163,30 @@ const main = async () => {
       }
     ])
 
+    await db.insert(schema.challenges).values([
+      {
+        id: 4,
+        lessonId: 2,
+        type: 'SELECT',
+        order: 1,
+        question: 'O que é um Software?'
+      },
+      {
+        id: 5,
+        lessonId: 2,
+        type: 'ASSIST',
+        order: 2,
+        question: 'Selecione o tópico envolvendo a crise do software'
+      },
+      {
+        id: 6,
+        lessonId: 2,
+        type: 'ASSIST',
+        order: 3,
+        question: 'Selecione o exemplo de software com mais de uma categoria'
+      }
+    ])
+
     console.log('Seeding finished')
   } catch (error) {
     console.error(error)
