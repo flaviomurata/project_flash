@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { upsertChallengeProgress } from '@/actions/challenge-progress'
@@ -7,11 +8,12 @@ import { QuestionBubble } from '@/app/lesson/question-bubble'
 import { ResultCard } from '@/app/lesson/result-card'
 import { challengeOptions, challenges } from '@/db/schema'
 import { useHeartsModal } from '@/store/use-hearts-modal'
+import { usePracticeModal } from '@/store/use-practice-modal'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import Confetti from 'react-confetti'
-import { useAudio, useWindowSize } from 'react-use'
+import { useAudio, useMount, useWindowSize } from 'react-use'
 import { toast } from 'sonner'
 import { Footer } from './footer'
 import { Header } from './header'
@@ -33,6 +35,15 @@ export const Quiz = ({
   initialLessonId
 }: Props) => {
   const { open: openHeartsModal } = useHeartsModal()
+  const { open: openPracticeModal } = usePracticeModal()
+
+  useMount(() => {
+    console.log('initialPercentage', initialPercentage)
+    if (initialPercentage === 100) {
+      openPracticeModal()
+    }
+  })
+
   const { width, height } = useWindowSize()
 
   const router = useRouter()
@@ -47,7 +58,9 @@ export const Quiz = ({
 
   const [lessonId] = useState(initialLessonId)
   const [hearts, setHearts] = useState(initialHearts)
-  const [percentage, setPercentage] = useState(initialPercentage)
+  const [percentage, setPercentage] = useState(() => {
+    return initialPercentage === 100 ? 0 : initialPercentage
+  })
   const [challenges] = useState(initalLessonChallenges)
   const [activeIndex, setActiveIndex] = useState(() => {
     const uncompletedIndex = challenges.findIndex(

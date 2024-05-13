@@ -9,15 +9,13 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useExitModal } from '@/store/use-exit-modal'
+import { usePracticeModal } from '@/store/use-practice-modal'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export const ExitModal = () => {
-  const router = useRouter()
+export const PracticeModal = () => {
   const [isClient, setIsClient] = useState(false)
-  const { isOpen, close } = useExitModal()
+  const { isOpen, close } = usePracticeModal()
 
   useEffect(() => setIsClient(true), [])
 
@@ -28,14 +26,14 @@ export const ExitModal = () => {
       <DialogContent>
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/mascot_sad.svg" alt="mascot" height={80} width={80} />
+            <Image src="/heart.svg" alt="Heart" height={100} width={100} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Wait, don&apos;t go!
+            Practice lesson
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            You&apos;re about to leave the lesson. Are you sure you want to
-            exit?
+            Use practice lesson to regain hearts and points. You cannot lose
+            hearts or points in practice lesson
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">
@@ -46,18 +44,7 @@ export const ExitModal = () => {
               size="lg"
               onClick={close}
             >
-              Keep Learning
-            </Button>
-            <Button
-              className="w-full"
-              variant="dangerOutline"
-              size="lg"
-              onClick={() => {
-                close()
-                router.push('/learn')
-              }}
-            >
-              End session
+              I understand
             </Button>
           </div>
         </DialogFooter>
