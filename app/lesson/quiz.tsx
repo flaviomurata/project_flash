@@ -6,6 +6,7 @@ import { Challenge } from '@/app/lesson/challenge'
 import { QuestionBubble } from '@/app/lesson/question-bubble'
 import { ResultCard } from '@/app/lesson/result-card'
 import { challengeOptions, challenges } from '@/db/schema'
+import { useHeartsModal } from '@/store/use-hearts-modal'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
@@ -31,6 +32,7 @@ export const Quiz = ({
   initalLessonChallenges,
   initialLessonId
 }: Props) => {
+  const { open: openHeartsModal } = useHeartsModal()
   const { width, height } = useWindowSize()
 
   const router = useRouter()
@@ -91,12 +93,12 @@ export const Quiz = ({
       return
     }
 
-    if (correctOption && correctOption.id === selectedOption) {
+    if (correctOption.id === selectedOption) {
       startTransition(() => {
         upsertChallengeProgress(challenge.id)
           .then((response) => {
             if (response?.error === 'hearts') {
-              console.log('Missing hearts')
+              openHeartsModal()
               return
             }
 
@@ -115,7 +117,7 @@ export const Quiz = ({
         reduceHearts(challenge.id)
           .then((response) => {
             if (response?.error === 'hearts') {
-              console.error('Missing hearts')
+              openHeartsModal()
               return
             }
 
