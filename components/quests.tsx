@@ -32,7 +32,7 @@ export const Quests = ({ points }: Props) => {
                 <p className="text-neutral-700 text-sm font-bold">
                   {quest.title}
                 </p>
-                <Progress value={progress} className="h-2" />
+                <Progress value={progress} variant="quest" className="h-2" />
               </div>
             </div>
           )

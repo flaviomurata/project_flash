@@ -16,7 +16,7 @@ export const Header = ({ hearts, percentage }: Props) => {
         onClick={open}
         className="text-slate-500 hover:opacity-75 transition cursor-pointer"
       />
-      <Progress value={percentage} />
+      <Progress value={percentage} variant="challenge" />
       <div className="text-rose-500 flex items-center font-bold">
         <Image
           src="/heart.svg"

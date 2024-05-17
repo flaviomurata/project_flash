@@ -5,10 +5,16 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+type ProgressProps = React.ComponentPropsWithoutRef<
+  typeof ProgressPrimitive.Root
+> & {
+  variant?: 'quest' | 'challenge'
+}
+
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ className, value, ...props }, ref) => (
+  ProgressProps
+>(({ className, value, variant, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
@@ -18,7 +24,13 @@ const Progress = React.forwardRef<
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-orange-400 transition-all"
+      className={cn(
+        'h-full w-full flex-1 transition-all',
+        variant === 'challenge' && value! >= 50
+          ? 'bg-orange-400'
+          : 'bg-green-400',
+        variant === 'quest' && 'bg-yellow-400'
+      )}
       style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
     />
   </ProgressPrimitive.Root>
