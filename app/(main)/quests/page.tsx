@@ -51,7 +51,11 @@ const QuestsPage = async () => {
                     <p className="text-neutral-700 text-xl font-bold">
                       {quest.title}
                     </p>
-                    <Progress value={progress} className="h-3" />
+                    <Progress
+                      value={progress}
+                      variant="quest"
+                      className="h-3"
+                    />
                   </div>
                 </div>
               )

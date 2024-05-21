@@ -38,7 +38,6 @@ export const Quiz = ({
   const { open: openPracticeModal } = usePracticeModal()
 
   useMount(() => {
-    console.log('initialPercentage', initialPercentage)
     if (initialPercentage === 100) {
       openPracticeModal()
     }

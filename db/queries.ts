@@ -1,5 +1,11 @@
 import db from '@/db/drizzle'
-import { challengeProgress, courses, lessons, userProgress } from '@/db/schema'
+import {
+  challengeProgress,
+  courses,
+  lessons,
+  units,
+  userProgress
+} from '@/db/schema'
 import { auth } from '@clerk/nextjs'
 import { eq } from 'drizzle-orm'
 import { cache } from 'react'
@@ -30,7 +36,7 @@ export const getUnits = cache(async () => {
 
   const data = await db.query.units.findMany({
     orderBy: (units, { asc }) => [asc(units.order)],
-    where: eq(courses.id, userProgress.activeCourseId),
+    where: eq(units.courseId, userProgress.activeCourseId),
     with: {
       lessons: {
         orderBy: (lessons, { asc }) => [asc(lessons.order)],
@@ -59,7 +65,7 @@ export const getUnits = cache(async () => {
           challenge.challengeProgress &&
           challenge.challengeProgress.length > 0 &&
           challenge.challengeProgress.every((progress) => {
-            return progress.completed
+            progress.completed
           })
         )
       })
