@@ -32,6 +32,7 @@ export const Challenge = ({
           status={status}
           disabled={disabled}
           type={type}
+          audioSrc={null}
         />
       ))}
     </div>
