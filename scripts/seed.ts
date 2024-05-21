@@ -49,6 +49,13 @@ const main = async () => {
         title: 'Desenvolvimento de Software',
         description: 'Conceitos básicos de Engenharia de Software',
         order: 1
+      },
+      {
+        id: 2,
+        courseId: 1,
+        title: 'Requisitos de Software',
+        description: 'Conceitos de requisitos de software',
+        order: 2
       }
     ])
 
