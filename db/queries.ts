@@ -65,7 +65,7 @@ export const getUnits = cache(async () => {
           challenge.challengeProgress &&
           challenge.challengeProgress.length > 0 &&
           challenge.challengeProgress.every((progress) => {
-            progress.completed
+            return progress.completed
           })
         )
       })
